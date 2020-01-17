@@ -3,6 +3,7 @@ import React from 'react';
 import './global.css';
 import './App.css';
 import './Sidebar.css';
+import './Main.css';
 
 const App = () => {
   return (
@@ -35,7 +36,52 @@ const App = () => {
         </form>
       </aside>
       <main>
-
+        <ul>
+          <li className="dev-item">
+            <header>
+              <img src="https://avatars3.githubusercontent.com/u/1760665?s=460&v=4" alt="Bruno Rodrigues" />
+              <div className="user-info">
+                <strong>Bruno Rodrigues</strong>
+                <span>ReactJS, React Native, NodeJS</span>
+              </div>
+              <p>Fullstack in Venturus, In Love with Java and Javascript</p>
+              <a href="https://github/com/brunocrodriguessouza">Acessar Perfil no Github</a>
+            </header>
+          </li>
+          <li className="dev-item">
+            <header>
+              <img src="https://avatars3.githubusercontent.com/u/1760665?s=460&v=4" alt="Bruno Rodrigues" />
+              <div className="user-info">
+                <strong>Bruno Rodrigues</strong>
+                <span>ReactJS, React Native, NodeJS</span>
+              </div>
+              <p>Fullstack in Venturus, In Love with Java and Javascript</p>
+              <a href="https://github/com/brunocrodriguessouza">Acessar Perfil no Github</a>
+            </header>
+          </li>
+          <li className="dev-item">
+            <header>
+              <img src="https://avatars3.githubusercontent.com/u/1760665?s=460&v=4" alt="Bruno Rodrigues" />
+              <div className="user-info">
+                <strong>Bruno Rodrigues</strong>
+                <span>ReactJS, React Native, NodeJS</span>
+              </div>
+              <p>Fullstack in Venturus, In Love with Java and Javascript</p>
+              <a href="https://github/com/brunocrodriguessouza">Acessar Perfil no Github</a>
+            </header>
+          </li>
+          <li className="dev-item">
+            <header>
+              <img src="https://avatars3.githubusercontent.com/u/1760665?s=460&v=4" alt="Bruno Rodrigues" />
+              <div className="user-info">
+                <strong>Bruno Rodrigues</strong>
+                <span>ReactJS, React Native, NodeJS</span>
+              </div>
+              <p>Fullstack in Venturus, In Love with Java and Javascript</p>
+              <a href="https://github/com/brunocrodriguessouza">Acessar Perfil no Github</a>
+            </header>
+          </li>
+        </ul>
       </main>
     </div>
   );
