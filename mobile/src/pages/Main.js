@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Image, View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Image, View, Text, TextInput, TouchableOpacity, Keyboard } from 'react-native';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import { requestPermissionsAsync, getCurrentPositionAsync } from 'expo-location';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -9,8 +9,10 @@ import { connect, disconnect, subscribeToNewDevs } from '../services/socket';
 
 function Main({ navigation }) {
   const [devs, setDevs] = useState([]);
-  const [currentRegion, setCurrentRegion] = useState(null);
   const [techs, setTechs] = useState('');
+  const [searching, setSearching] = useState(false);
+  const [currentRegion, setCurrentRegion] = useState(null);
+  const [keyboardShown, setKeyboardShown] = useState(false);
 
   useEffect(() => {
     async function loadInitialPosition() {
@@ -28,11 +30,13 @@ function Main({ navigation }) {
           longitude,
           latitudeDelta: 0.04,
           longitudeDelta: 0.04,
-        })
+        });
       }
     }
 
     loadInitialPosition();
+    Keyboard.addListener('keyboardDidShow', () => setKeyboardShown(true));
+    Keyboard.addListener('keyboardDidHide', () => setKeyboardShown(false));
   }, []);
 
   useEffect(() => {
@@ -41,7 +45,9 @@ function Main({ navigation }) {
 
   function setupWebsocket() {
     disconnect();
+
     const { latitude, longitude } = currentRegion;
+
     connect(
       latitude,
       longitude,
@@ -51,8 +57,11 @@ function Main({ navigation }) {
   }
 
   async function loadDevs() {
-    const { latitude, longitude } = currentRegion;
+    if (searching)
+      return;
+    setSearching(true);
 
+    const { latitude, longitude } = currentRegion;
     const response = await api.get('/search', {
       params: {
         latitude,
@@ -62,6 +71,7 @@ function Main({ navigation }) {
     });
 
     setDevs(response.data.devs);
+    setSearching(false);
     setupWebsocket();
   }
 
@@ -116,12 +126,12 @@ function Main({ navigation }) {
         />
 
         <TouchableOpacity onPress={loadDevs} style={styles.loadButton}>
-          <MaterialIcons name="my-location" size={20} color="#FFF" />
+          {!searching && <MaterialIcons name="my-location" size={20} color="#FFF" />}
+          {searching && <MaterialIcons name="gps-not-fixed" size={20} color="#FFF" />}
         </TouchableOpacity>
       </View>
     </>
   )
-
 }
 
 const styles = StyleSheet.create({
